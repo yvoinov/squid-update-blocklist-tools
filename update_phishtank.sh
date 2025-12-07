@@ -3,7 +3,7 @@
 # By accepting this notice, you agree to be bound by the following
 # agreements:
 #
-# This script written by Yuri Voinov (C) 2010,2016
+# This script written by Yuri Voinov (C) 2010-2025
 #
 # This program is free software; you can redistribute it and/or modify it
 # under the terms of the GNU General Public License (version 2) as
@@ -21,7 +21,7 @@
 # Based on shalla_update.sh, v 0.3.1 20080403
 # and update_blocklist.sh, v 1.1-1.9 by Y.Voinov.
 #
-# ident   "@(#)update_phishtank.sh     1.0     28/06/16 YV"
+# ident   "@(#)update_phishtank.sh     1.1     07/12/25 YV"
 #
 
 #############
@@ -29,7 +29,7 @@
 #############
 
 # Key
-KEY="Insert_your_fishtank_API_key_here"
+KEY="85e1fc30858910e63d0c5e344a5672254037421e27cb5a4636f6d1420ccb13a5"
 
 # Modify PATH for SFW directory use
 PATH=/usr/sfw/bin:$PATH
@@ -47,6 +47,9 @@ WORK_DIR="$TEMP_DIR/phishtank"
 
 # Connection timeout for downloading
 TIMEOUT=30
+
+# Wget additional options
+WGET_OPTS="--no-check-certificate"
 
 # Redirector user name
 RDR_USER="ufdb"
@@ -142,7 +145,7 @@ download_list ()
  # Get list from one server using server list
  $PRINTF "List downloading..."
  for S in $SERVER_LIST; do
-  $WGET -T $TIMEOUT -q -O $WORK_DIR/$LIST_NAME $S
+  $WGET $WGET_OPTS -T $TIMEOUT -q -O $WORK_DIR/$LIST_NAME $S
   retcode=`$ECHO $?`
   case "$retcode" in
    0)
