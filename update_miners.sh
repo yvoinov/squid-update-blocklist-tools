@@ -2,7 +2,7 @@
 #
 # Convert the miners server listing
 # into an ufdbGuard domains.
-# Modified by Y.Voinov (c) 2014,2018
+# Modified by Y.Voinov (c) 2014-2025
 
 # Variables
 list_="https://raw.githubusercontent.com/Marfjeh/coinhive-block/master/domains"
@@ -10,6 +10,9 @@ dst_dir="/usr/local/ufdbguard/blacklists/miners"
 work_dir="/tmp"
 filteruser="ufdb"
 filtergroup="ufdb"
+
+# Wget additional options
+WGET_OPTS="--no-check-certificate"
 
 # OS commands
 AWK=`which awk`
@@ -22,7 +25,7 @@ TOUCH=`which touch`
 WGET=`which wget`
 
 $ECHO "List downloading..."
-$WGET -O $work_dir/miners $list_ && \
+$WGET $WGET_OPTS -O $work_dir/miners $list_ && \
 $ECHO "Move to blacklists directory..."
 $MV $work_dir/miners $dst_dir/domains
 
