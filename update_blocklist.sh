@@ -3,7 +3,7 @@
 # By accepting this notice, you agree to be bound by the following
 # agreements:
 #
-# This script written by Yuri Voinov (C) 2010,2022
+# This script written by Yuri Voinov (C) 2010-2025
 #
 # This program is free software; you can redistribute it and/or modify it
 # under the terms of the GNU General Public License (version 2) as
@@ -19,9 +19,9 @@
 # ufdbGuard blocklist update
 #
 # Based on shalla_update.sh, v 0.3.1 20080403
-# and update_blocklist.sh, v 1.1-1.9 by Y.Voinov.
+# and update_blocklist.sh, v 1.1-2.1 by Y.Voinov.
 #
-# ident   "@(#)update_blocklist.sh     2.0     05/04/22 YV"
+# ident   "@(#)update_blocklist.sh     2.1     07/12/25 YV"
 #
 
 ## NOTE: You can select redirector compilation categories by edit CATEGORIES variable for compilation.
@@ -32,6 +32,7 @@
 
 # ------------- Blacklist options ------------------
 CATEGORIES="adult arjel agressif audio-video celebrity cryptojacking dangerous_material dating ddos dialer drogue gambling games hacking lingerie malware manga mixed_adult phishing redirector remote-control sect sexual_education social_networks stalkerware warez"
+##CATEGORIES="adv anonvpn costtraps dating drugs fortunetelling gamble hacking hobby/games-misc hobby/games-online models movies music porn redirector sex/lingerie socialnet spyware tracker updatesites urlshortener warez webradio webtv"
 # ------------- Blacklist options ------------------
 
 # Modify PATH for SFW directory use
@@ -50,6 +51,9 @@ WORK_DIR="$TEMP_DIR/pfsense"
 
 # Connection timeout for downloading
 TIMEOUT=30
+
+# Wget additional options
+WGET_OPTS="--no-check-certificate"
 
 # SMF name
 SMF_NAME="svc:/network/ufdbguard:default"
@@ -185,7 +189,7 @@ download_list ()
  # Get list from one server using server list
  $PRINTF "Black list downloading..."
  for S in $SERVER_LIST; do
-  $WGET -T $TIMEOUT -q -O $WORK_DIR/$LIST_NAME $S
+  $WGET $WGET_OPTS -T $TIMEOUT -q -O $WORK_DIR/$LIST_NAME $S
   retcode=`$ECHO $?`
   case "$retcode" in
    0)
